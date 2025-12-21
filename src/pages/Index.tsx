@@ -1,13 +1,35 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { Navigation } from '@/components/Navigation';
+import { Hero } from '@/components/Hero';
+import { BirthdayNotes } from '@/components/BirthdayNotes';
+import { BirthdayPoem } from '@/components/BirthdayPoem';
+import { Gallery } from '@/components/Gallery';
+import { Footer } from '@/components/Footer';
+import { ParticleBackground } from '@/components/ParticleBackground';
 
 const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <main className="relative min-h-screen bg-background overflow-x-hidden">
+      {/* Floating particles background */}
+      <ParticleBackground />
+      
+      {/* Navigation */}
+      <Navigation />
+      
+      {/* Hero with Countdown */}
+      <Hero />
+      
+      {/* Birthday Notes Section */}
+      <BirthdayNotes />
+      
+      {/* Birthday Poem Section */}
+      <BirthdayPoem />
+      
+      {/* Gallery Section */}
+      <Gallery />
+      
+      {/* Footer */}
+      <Footer />
+    </main>
   );
 };
 
