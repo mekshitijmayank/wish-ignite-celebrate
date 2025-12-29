@@ -1,10 +1,27 @@
 import { Link } from 'react-router-dom';
-import { Navigation } from '@/components/Navigation';
 import { Hero } from '@/components/Hero';
-import { BirthdayNotes } from '@/components/BirthdayNotes';
 import { Footer } from '@/components/Footer';
 import { ParticleBackground } from '@/components/ParticleBackground';
-import { Feather, Camera, ArrowRight, Sparkles } from 'lucide-react';
+import { FloatingNav } from '@/components/FloatingNav';
+import { Feather, Camera, ArrowRight, Sparkles, Heart, Star, Gift, MessageCircle } from 'lucide-react';
+
+// Preview notes for home page
+const previewNotes = [
+  {
+    id: 1,
+    message: "Wishing you a day filled with love, laughter, and all the happiness your heart can hold.",
+    author: "With Love",
+    icon: Heart,
+    color: "text-rose",
+  },
+  {
+    id: 2,
+    message: "Another year older, another year wiser, and another year of making amazing memories.",
+    author: "Forever Grateful",
+    icon: Star,
+    color: "text-primary",
+  },
+];
 
 const Index = () => {
   return (
@@ -12,96 +29,159 @@ const Index = () => {
       {/* Floating particles background */}
       <ParticleBackground />
       
-      {/* Navigation */}
-      <Navigation />
+      {/* Floating Navigation */}
+      <FloatingNav />
       
       {/* Hero with Countdown */}
       <Hero />
       
-      {/* Birthday Notes Section */}
-      <BirthdayNotes />
-      
-      {/* Poem & Gallery Cards Section */}
-      <section className="py-20 px-4 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent" />
+      {/* Notes Preview Section */}
+      <section className="py-20 px-4 relative overflow-hidden" id="notes">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-accent/5 rounded-full blur-3xl" />
         
         <div className="max-w-6xl mx-auto relative">
-          <div className="text-center mb-16">
-            <span className="text-primary uppercase tracking-[0.3em] text-sm font-body mb-4 block animate-fade-up">
-              Explore More
-            </span>
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-display font-bold text-foreground animate-fade-up" style={{ animationDelay: '0.1s' }}>
-              Special <span className="text-gradient-gold">Sections</span>
+          <div className="text-center mb-12">
+            <div className="flex items-center justify-center gap-3 mb-4 animate-fade-up">
+              <MessageCircle className="w-5 h-5 text-primary" />
+              <span className="text-primary uppercase tracking-[0.3em] text-sm font-body">
+                Heartfelt Messages
+              </span>
+            </div>
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-display font-bold text-foreground mb-4 animate-fade-up" style={{ animationDelay: '0.1s' }}>
+              Birthday <span className="text-gradient-gold">Notes</span>
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* Poem Card */}
-            <Link 
-              to="/poem" 
-              className="group relative animate-fade-up"
-              style={{ animationDelay: '0.2s' }}
-            >
-              <div className="absolute -inset-1 bg-gradient-to-r from-primary/50 via-accent/30 to-primary/50 rounded-3xl blur-xl opacity-0 group-hover:opacity-70 transition-opacity duration-500" />
-              <div className="relative card-glass rounded-3xl p-8 sm:p-10 border border-primary/20 overflow-hidden transform group-hover:scale-[1.02] transition-all duration-500">
-                {/* Background decoration */}
-                <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-primary/10 to-transparent rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700" />
-                
-                <div className="relative z-10">
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="p-3 rounded-full bg-primary/10 border border-primary/30 group-hover:animate-glow transition-all duration-300">
-                      <Feather className="w-6 h-6 text-primary" />
-                    </div>
-                    <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-2 transition-all duration-300" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-10">
+            {previewNotes.map((note, index) => (
+              <div
+                key={note.id}
+                className="group relative animate-fade-up"
+                style={{ animationDelay: `${0.2 + index * 0.15}s` }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="relative card-glass rounded-2xl p-8 h-full border border-border/50 hover:border-primary/30 transition-all duration-500 group-hover:translate-y-[-4px]">
+                  <div className={`${note.color} mb-6`}>
+                    <note.icon className="w-10 h-10" />
                   </div>
-                  
-                  <h3 className="text-2xl sm:text-3xl font-display font-bold text-foreground mb-3">
-                    Birthday <span className="text-gradient-gold">Poem</span>
-                  </h3>
-                  <p className="text-muted-foreground font-elegant italic text-lg">
-                    A heartfelt tribute written just for this special celebration
+                  <p className="text-foreground/90 text-lg leading-relaxed mb-6 font-elegant">
+                    "{note.message}"
                   </p>
-                  
-                  <div className="mt-6 flex items-center gap-2 text-primary font-body text-sm uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <Sparkles className="w-4 h-4" />
-                    <span>Read the poem</span>
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-[1px] bg-gradient-to-r from-primary to-transparent" />
+                    <span className="text-muted-foreground text-sm uppercase tracking-wider font-body">
+                      {note.author}
+                    </span>
                   </div>
                 </div>
               </div>
-            </Link>
+            ))}
+          </div>
 
-            {/* Gallery Card */}
-            <Link 
-              to="/gallery" 
-              className="group relative animate-fade-up"
-              style={{ animationDelay: '0.3s' }}
+          {/* View All Notes Button */}
+          <div className="text-center animate-fade-up" style={{ animationDelay: '0.5s' }}>
+            <Link
+              to="/notes"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-secondary/50 border border-primary/30 text-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300 group"
             >
-              <div className="absolute -inset-1 bg-gradient-to-r from-accent/50 via-primary/30 to-accent/50 rounded-3xl blur-xl opacity-0 group-hover:opacity-70 transition-opacity duration-500" />
-              <div className="relative card-glass rounded-3xl p-8 sm:p-10 border border-primary/20 overflow-hidden transform group-hover:scale-[1.02] transition-all duration-500">
-                {/* Background decoration */}
-                <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-accent/10 to-transparent rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700" />
-                
-                <div className="relative z-10">
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="p-3 rounded-full bg-accent/10 border border-accent/30 group-hover:animate-glow transition-all duration-300">
-                      <Camera className="w-6 h-6 text-accent" />
-                    </div>
-                    <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-accent group-hover:translate-x-2 transition-all duration-300" />
-                  </div>
-                  
-                  <h3 className="text-2xl sm:text-3xl font-display font-bold text-foreground mb-3">
-                    Memory <span className="text-gradient-gold">Gallery</span>
-                  </h3>
-                  <p className="text-muted-foreground font-elegant italic text-lg">
-                    A beautiful collection of captured moments and precious memories
-                  </p>
-                  
-                  <div className="mt-6 flex items-center gap-2 text-accent font-body text-sm uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <Sparkles className="w-4 h-4" />
-                    <span>View gallery</span>
-                  </div>
-                </div>
+              <span className="font-body text-sm uppercase tracking-wider">View All Notes</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Poem Preview Section */}
+      <section className="py-20 px-4 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent" />
+        
+        <div className="max-w-4xl mx-auto relative">
+          <div className="text-center mb-12">
+            <div className="flex items-center justify-center gap-3 mb-4 animate-fade-up">
+              <Feather className="w-5 h-5 text-primary" />
+              <span className="text-primary uppercase tracking-[0.3em] text-sm font-body">
+                A Special Tribute
+              </span>
+            </div>
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-display font-bold text-foreground mb-4 animate-fade-up" style={{ animationDelay: '0.1s' }}>
+              Birthday <span className="text-gradient-gold">Poem</span>
+            </h2>
+          </div>
+
+          <div className="relative animate-fade-up" style={{ animationDelay: '0.2s' }}>
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-accent/5 to-primary/10 rounded-3xl blur-xl" />
+            <div className="relative card-glass rounded-3xl p-8 sm:p-10 border border-primary/20">
+              <div className="text-center space-y-6 font-elegant text-xl sm:text-2xl leading-relaxed text-foreground/90 italic">
+                <p>
+                  On this day a star was born,
+                  <br />
+                  <span className="text-primary/80">A light that makes each moment warm.</span>
+                </p>
+                <p className="text-muted-foreground">...</p>
               </div>
+              
+              <div className="mt-8 text-center">
+                <Link
+                  to="/poem"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary/10 border border-primary/30 text-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300 group"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  <span className="font-body text-sm uppercase tracking-wider">Read Full Poem</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Gallery Preview Section */}
+      <section className="py-20 px-4 relative overflow-hidden">
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
+        
+        <div className="max-w-6xl mx-auto relative">
+          <div className="text-center mb-12">
+            <div className="flex items-center justify-center gap-3 mb-4 animate-fade-up">
+              <Camera className="w-5 h-5 text-primary" />
+              <span className="text-primary uppercase tracking-[0.3em] text-sm font-body">
+                Captured Moments
+              </span>
+            </div>
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-display font-bold text-foreground mb-4 animate-fade-up" style={{ animationDelay: '0.1s' }}>
+              Memory <span className="text-gradient-gold">Gallery</span>
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-10">
+            {[
+              "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=400&h=300&fit=crop",
+              "https://images.unsplash.com/photo-1464349153735-7db50ed83c84?w=400&h=300&fit=crop",
+              "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=400&h=300&fit=crop",
+            ].map((src, index) => (
+              <div
+                key={index}
+                className="group relative aspect-[4/3] overflow-hidden rounded-2xl animate-fade-up"
+                style={{ animationDelay: `${0.2 + index * 0.1}s` }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent opacity-70 z-10 group-hover:opacity-40 transition-all duration-500" />
+                <img
+                  src={src}
+                  alt="Birthday memory"
+                  className="w-full h-full object-cover transform group-hover:scale-110 transition-all duration-700"
+                />
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center animate-fade-up" style={{ animationDelay: '0.5s' }}>
+            <Link
+              to="/gallery"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-secondary/50 border border-primary/30 text-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300 group"
+            >
+              <Camera className="w-4 h-4" />
+              <span className="font-body text-sm uppercase tracking-wider">View Full Gallery</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
         </div>
