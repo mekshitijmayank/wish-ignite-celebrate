@@ -27,7 +27,7 @@ export const Hero = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center px-4 pt-20" id="countdown">
+    <section className="relative min-h-screen flex flex-col items-center justify-center px-4 pt-20" id="hero">
       <Fireworks show={showFireworks} />
       
       {/* Decorative elements */}
