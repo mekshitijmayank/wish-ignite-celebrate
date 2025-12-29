@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { X, ChevronLeft, ChevronRight, ArrowLeft, Camera, Sparkles } from 'lucide-react';
 import { ParticleBackground } from '@/components/ParticleBackground';
+import { PageTransition } from '@/components/PageTransition';
 
 const galleryImages = [
   {
@@ -67,7 +68,8 @@ export const GalleryPage = () => {
   };
 
   return (
-    <main className="relative min-h-screen bg-background overflow-x-hidden">
+    <PageTransition>
+      <main className="relative min-h-screen bg-background overflow-x-hidden">
       <ParticleBackground />
       
       {/* Back Button */}
@@ -212,7 +214,8 @@ export const GalleryPage = () => {
           </div>
         )}
       </section>
-    </main>
+      </main>
+    </PageTransition>
   );
 };
 

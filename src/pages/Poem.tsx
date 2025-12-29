@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom';
 import { Feather, ArrowLeft, Sparkles, Star } from 'lucide-react';
 import { ParticleBackground } from '@/components/ParticleBackground';
+import { PageTransition } from '@/components/PageTransition';
 
 export const Poem = () => {
   return (
-    <main className="relative min-h-screen bg-background overflow-x-hidden">
+    <PageTransition>
+      <main className="relative min-h-screen bg-background overflow-x-hidden">
       <ParticleBackground />
       
       {/* Back Button */}
@@ -108,7 +110,8 @@ export const Poem = () => {
           </div>
         </div>
       </section>
-    </main>
+      </main>
+    </PageTransition>
   );
 };
 
