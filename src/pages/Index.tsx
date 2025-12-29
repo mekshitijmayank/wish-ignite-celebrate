@@ -3,6 +3,7 @@ import { Hero } from '@/components/Hero';
 import { Footer } from '@/components/Footer';
 import { ParticleBackground } from '@/components/ParticleBackground';
 import { FloatingNav } from '@/components/FloatingNav';
+import { PageTransition } from '@/components/PageTransition';
 import { Feather, Camera, ArrowRight, Sparkles, Heart, Star, Gift, MessageCircle } from 'lucide-react';
 
 // Preview notes for home page
@@ -25,7 +26,8 @@ const previewNotes = [
 
 const Index = () => {
   return (
-    <main className="relative min-h-screen bg-background overflow-x-hidden">
+    <PageTransition>
+      <main className="relative min-h-screen bg-background overflow-x-hidden">
       {/* Floating particles background */}
       <ParticleBackground />
       
@@ -189,7 +191,8 @@ const Index = () => {
       
       {/* Footer */}
       <Footer />
-    </main>
+      </main>
+    </PageTransition>
   );
 };
 

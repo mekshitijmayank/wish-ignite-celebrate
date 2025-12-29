@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Heart, Star, Sparkles, Gift, ArrowLeft, MessageCircle } from 'lucide-react';
 import { ParticleBackground } from '@/components/ParticleBackground';
+import { PageTransition } from '@/components/PageTransition';
 
 const notes = [
   {
@@ -49,7 +50,8 @@ const notes = [
 
 export const NotesPage = () => {
   return (
-    <main className="relative min-h-screen bg-background overflow-x-hidden">
+    <PageTransition>
+      <main className="relative min-h-screen bg-background overflow-x-hidden">
       <ParticleBackground />
       
       {/* Back Button */}
@@ -113,7 +115,8 @@ export const NotesPage = () => {
           </div>
         </div>
       </section>
-    </main>
+      </main>
+    </PageTransition>
   );
 };
 
