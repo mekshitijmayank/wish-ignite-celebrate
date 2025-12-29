@@ -18,7 +18,7 @@ export const FloatingNav = () => {
       {/* Mobile Toggle Button */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="fixed bottom-6 right-6 z-50 md:hidden p-4 rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30 hover:scale-110 transition-all duration-300"
+        className="fixed bottom-6 left-6 z-50 md:hidden p-4 rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30 hover:scale-110 transition-all duration-300"
       >
         <div className="relative w-6 h-6">
           <Menu className={`w-6 h-6 absolute transition-all duration-300 ${isExpanded ? 'opacity-0 rotate-90' : 'opacity-100 rotate-0'}`} />
@@ -33,7 +33,7 @@ export const FloatingNav = () => {
         }`}
         onClick={() => setIsExpanded(false)}
       >
-        <div className="absolute bottom-24 right-6 flex flex-col gap-3">
+        <div className="absolute bottom-24 left-6 flex flex-col gap-3">
           {navItems.map((item, index) => (
             <Link
               key={item.label}
@@ -46,7 +46,7 @@ export const FloatingNav = () => {
               }`}
               style={{ 
                 animationDelay: `${index * 0.05}s`,
-                transform: isExpanded ? 'translateX(0)' : 'translateX(100px)',
+                transform: isExpanded ? 'translateX(0)' : 'translateX(-100px)',
                 opacity: isExpanded ? 1 : 0,
                 transitionDelay: `${index * 0.05}s`
               }}
@@ -59,7 +59,7 @@ export const FloatingNav = () => {
       </div>
 
       {/* Desktop Floating Navigation */}
-      <nav className="fixed right-6 top-1/2 -translate-y-1/2 z-50 hidden md:flex flex-col gap-3">
+      <nav className="fixed left-6 top-1/2 -translate-y-1/2 z-50 hidden md:flex flex-col gap-3">
         {/* Logo */}
         <div className="flex items-center justify-center mb-4">
           <div className="p-3 rounded-full bg-primary/10 border border-primary/30 animate-pulse-slow">
@@ -80,13 +80,13 @@ export const FloatingNav = () => {
             <item.icon className="w-5 h-5" />
             
             {/* Tooltip */}
-            <span className="absolute right-full mr-3 px-3 py-1.5 rounded-lg bg-secondary/90 backdrop-blur-md text-foreground text-sm font-body whitespace-nowrap opacity-0 invisible translate-x-2 group-hover:opacity-100 group-hover:visible group-hover:translate-x-0 transition-all duration-300 border border-border/50">
+            <span className="absolute left-full ml-3 px-3 py-1.5 rounded-lg bg-secondary/90 backdrop-blur-md text-foreground text-sm font-body whitespace-nowrap opacity-0 invisible -translate-x-2 group-hover:opacity-100 group-hover:visible group-hover:translate-x-0 transition-all duration-300 border border-border/50">
               {item.label}
             </span>
 
             {/* Active indicator */}
             {location.pathname === item.href && (
-              <span className="absolute -left-1 w-1 h-6 bg-primary rounded-full animate-pulse" />
+              <span className="absolute -right-1 w-1 h-6 bg-primary rounded-full animate-pulse" />
             )}
           </Link>
         ))}
