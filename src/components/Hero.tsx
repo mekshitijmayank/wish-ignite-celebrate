@@ -8,6 +8,7 @@ export const Hero = ({ onCountdownComplete }: { onCountdownComplete?: () => void
   const [timerActive, setTimerActive] = useState(true);
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
+  const celebrationAudioRef = useRef<HTMLAudioElement>(null);
   
   // Set target date to December 31st of current year at midnight
   const currentYear = new Date().getFullYear();
@@ -18,16 +19,14 @@ export const Hero = ({ onCountdownComplete }: { onCountdownComplete?: () => void
     targetDate.setFullYear(currentYear + 1);
   }
   
-  // Handle audio playback
+  // Handle audio playback with browser autoplay compatibility
   useEffect(() => {
     if (audioRef.current) {
       if (timerActive) {
-        // Try to play, but handle browser autoplay restrictions
         const playPromise = audioRef.current.play();
         if (playPromise !== undefined) {
           playPromise.catch(err => {
-            // Autoplay was prevented, will play on first user interaction
-            console.log('Autoplay prevented, audio will play on user interaction');
+            console.log('Audio autoplay restricted, will resume on user interaction');
           });
         }
       } else {
@@ -36,12 +35,22 @@ export const Hero = ({ onCountdownComplete }: { onCountdownComplete?: () => void
     }
   }, [timerActive]);
   
-  // Play audio on first user interaction
-  const handleUserInteraction = () => {
-    if (audioRef.current && timerActive) {
-      audioRef.current.play().catch(err => console.log('Audio play failed:', err));
-    }
-  };
+  // Resume audio on any user interaction to handle browser restrictions
+  useEffect(() => {
+    const resumeAudio = () => {
+      if (audioRef.current && timerActive && audioRef.current.paused) {
+        audioRef.current.play().catch(err => console.log('Audio play failed:', err));
+      }
+    };
+    
+    window.addEventListener('click', resumeAudio);
+    window.addEventListener('touchstart', resumeAudio);
+    
+    return () => {
+      window.removeEventListener('click', resumeAudio);
+      window.removeEventListener('touchstart', resumeAudio);
+    };
+  }, [timerActive]);
   
   const toggleMusic = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -59,14 +68,20 @@ export const Hero = ({ onCountdownComplete }: { onCountdownComplete?: () => void
   const handleCountdownComplete = useCallback(() => {
     setShowFireworks(true);
     setTimerActive(false);
-    // Auto-hide fireworks after 15 seconds
-    setTimeout(() => setShowFireworks(false), 15000);
+    
+    // Play celebration music
+    if (celebrationAudioRef.current) {
+      celebrationAudioRef.current.play().catch(err => console.log('Celebration audio play failed:', err));
+    }
+    
+    // Auto-hide fireworks after 10 seconds
+    setTimeout(() => setShowFireworks(false), 10000);
     // Notify parent component
     onCountdownComplete?.();
   }, [onCountdownComplete]);
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center px-4 pt-20" id="hero" onClick={handleUserInteraction}>
+    <section className="relative min-h-screen flex flex-col items-center justify-center px-4 pt-20" id="hero">
       <Fireworks show={showFireworks} />
       
       {/* Birthday Music - plays on repeat while timer is active */}
@@ -74,6 +89,13 @@ export const Hero = ({ onCountdownComplete }: { onCountdownComplete?: () => void
         ref={audioRef} 
         src="/birthday-music.mp3" 
         loop
+        className="hidden"
+      />
+      
+      {/* Celebration Audio - plays when timer completes */}
+      <audio 
+        ref={celebrationAudioRef} 
+        src="/celebration-music.m4a" 
         className="hidden"
       />
       
