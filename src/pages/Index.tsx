@@ -51,7 +51,7 @@ const Index = () => {
   const [memoryMatched, setMemoryMatched] = useState<Set<number>>(new Set());
   const [memoryScore, setMemoryScore] = useState(0);
   
-  const gameEmojis = ['🎂', '🎉', '🎁', '🎈', '🎊', '💝', '🌟', '✨'];
+  const gameEmojis = ['🎂', '🎉', '🎁', '🎈'];
   
   useEffect(() => {
     if (!timerComplete && memoryCards.length === 0) {
@@ -159,7 +159,7 @@ const Index = () => {
                     <p className="text-muted-foreground text-xs sm:text-sm">Pairs Matched</p>
                   </div>
                   
-                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-1.5 sm:gap-2 w-full max-w-sm">
+                  <div className="grid grid-cols-3 gap-1.5 sm:gap-2 w-full max-w-xs">
                     {memoryCards.map((emoji, index) => (
                       <button
                         key={index}

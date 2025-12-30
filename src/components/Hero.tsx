@@ -1,10 +1,12 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { CountdownTimer } from './CountdownTimer';
 import { Fireworks } from './Fireworks';
 import { Cake, PartyPopper, Heart } from 'lucide-react';
 
 export const Hero = ({ onCountdownComplete }: { onCountdownComplete?: () => void }) => {
   const [showFireworks, setShowFireworks] = useState(false);
+  const [timerActive, setTimerActive] = useState(true);
+  const audioRef = useRef<HTMLAudioElement>(null);
   
   // Set target date to December 31st of current year at midnight
   const currentYear = new Date().getFullYear();
@@ -14,9 +16,21 @@ export const Hero = ({ onCountdownComplete }: { onCountdownComplete?: () => void
   if (targetDate < new Date()) {
     targetDate.setFullYear(currentYear + 1);
   }
+  
+  // Handle audio playback
+  useEffect(() => {
+    if (audioRef.current) {
+      if (timerActive) {
+        audioRef.current.play().catch(err => console.log('Audio play failed:', err));
+      } else {
+        audioRef.current.pause();
+      }
+    }
+  }, [timerActive]);
 
   const handleCountdownComplete = useCallback(() => {
     setShowFireworks(true);
+    setTimerActive(false);
     // Auto-hide fireworks after 15 seconds
     setTimeout(() => setShowFireworks(false), 15000);
     // Notify parent component
@@ -26,6 +40,14 @@ export const Hero = ({ onCountdownComplete }: { onCountdownComplete?: () => void
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center px-4 pt-20" id="hero">
       <Fireworks show={showFireworks} />
+      
+      {/* Birthday Music - plays on repeat while timer is active */}
+      <audio 
+        ref={audioRef} 
+        src="/birthday-music.mp3" 
+        loop
+        className="hidden"
+      />
       
       {/* Decorative elements */}
       <div className="absolute top-1/4 left-10 w-20 h-20 border border-primary/20 rounded-full animate-float" style={{ animationDelay: '0s' }} />
