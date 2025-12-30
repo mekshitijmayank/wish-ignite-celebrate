@@ -82,6 +82,14 @@ const Index = () => {
       }
     }
   };
+  
+  const resetMemoryGame = () => {
+    const shuffled = [...gameEmojis, ...gameEmojis].sort(() => Math.random() - 0.5);
+    setMemoryCards(shuffled);
+    setMemoryFlipped(new Set());
+    setMemoryMatched(new Set());
+    setMemoryScore(0);
+  };
 
   const truncateText = (text: string, maxLength: number) => {
     if (text.length <= maxLength) return text;
@@ -172,8 +180,16 @@ const Index = () => {
                 </div>
                 
                 {memoryScore === gameEmojis.length && (
-                  <div className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-green-500/20 border border-green-500/50 text-green-400 rounded-lg text-center text-sm sm:text-base font-bold">
-                    🎉 You Won! Check back after the countdown!
+                  <div className="w-full space-y-3">
+                    <div className="px-3 sm:px-4 py-2 sm:py-3 bg-green-500/20 border border-green-500/50 text-green-400 rounded-lg text-center text-sm sm:text-base font-bold">
+                      🎉 You Won!
+                    </div>
+                    <button
+                      onClick={resetMemoryGame}
+                      className="w-full px-4 py-2 sm:py-3 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white font-bold rounded-lg text-sm sm:text-base transition-all duration-200 transform hover:scale-105 active:scale-95"
+                    >
+                      Play Again 🎮
+                    </button>
                   </div>
                 )}
               </div>
