@@ -7,6 +7,7 @@ export const Hero = ({ onCountdownComplete }: { onCountdownComplete?: () => void
   const [showFireworks, setShowFireworks] = useState(false);
   const [timerActive, setTimerActive] = useState(true);
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
+  const [hasShownInitialFireworks, setHasShownInitialFireworks] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
   const celebrationAudioRef = useRef<HTMLAudioElement>(null);
   
@@ -60,19 +61,30 @@ export const Hero = ({ onCountdownComplete }: { onCountdownComplete?: () => void
   };
 
   const handleCountdownComplete = useCallback(() => {
-    setShowFireworks(true);
-    setTimerActive(false);
-    
-    // Play celebration music
-    if (celebrationAudioRef.current) {
-      celebrationAudioRef.current.play().catch(err => console.log('Celebration audio play failed:', err));
+    // Only show initial fireworks once per session
+    if (!hasShownInitialFireworks) {
+      setShowFireworks(true);
+      setHasShownInitialFireworks(true);
+      
+      // Play celebration music
+      if (celebrationAudioRef.current) {
+        celebrationAudioRef.current.currentTime = 0;
+        celebrationAudioRef.current.play().catch(err => console.log('Celebration audio play failed:', err));
+      }
+      
+      // Auto-hide fireworks after 15 seconds
+      setTimeout(() => {
+        setShowFireworks(false);
+        if (celebrationAudioRef.current) {
+          celebrationAudioRef.current.pause();
+        }
+      }, 15000);
     }
     
-    // Auto-hide fireworks after 10 seconds
-    setTimeout(() => setShowFireworks(false), 10000);
+    setTimerActive(false);
     // Notify parent component
     onCountdownComplete?.();
-  }, [onCountdownComplete]);
+  }, [hasShownInitialFireworks, onCountdownComplete]);
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center px-4 pt-20" id="hero">

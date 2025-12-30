@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Hero } from '@/components/Hero';
 import { Footer } from '@/components/Footer';
@@ -46,7 +46,7 @@ const Index = () => {
   const [expandedNotes, setExpandedNotes] = useState<Set<number>>(new Set());
   const [timerComplete, setTimerComplete] = useState(false);
   const [showFireworks, setShowFireworks] = useState(false);
-  const [hasInitialFireworksPlayed, setHasInitialFireworksPlayed] = useState(false);
+  const celebrationAudioRef = useRef<HTMLAudioElement>(null);
   
   // Memory Game State
   const [memoryCards, setMemoryCards] = useState<boolean[]>([]);
@@ -128,15 +128,31 @@ const Index = () => {
   const handleReplayFireworks = () => {
     setShowFireworks(true);
     
+    // Play celebration music
+    if (celebrationAudioRef.current) {
+      celebrationAudioRef.current.currentTime = 0;
+      celebrationAudioRef.current.play().catch(err => console.log('Celebration audio play failed:', err));
+    }
+    
     // Auto-hide fireworks after 15 seconds
     setTimeout(() => {
       setShowFireworks(false);
+      if (celebrationAudioRef.current) {
+        celebrationAudioRef.current.pause();
+      }
     }, 15000);
   };
 
   return (
     <PageTransition>
       <main className="relative min-h-screen bg-background overflow-x-hidden">
+      {/* Celebration Audio - plays when fireworks are replayed */}
+      <audio 
+        ref={celebrationAudioRef} 
+        src="/celebration-music.m4a" 
+        className="hidden"
+      />
+      
       {/* Floating particles background */}
       <ParticleBackground />
       
