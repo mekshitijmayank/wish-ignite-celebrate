@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Home, MessageCircle, Feather, Camera, Sparkles, Menu, X } from 'lucide-react';
+import { ThemeToggle } from './ThemeToggle';
 
 const navItems = [
   { label: 'Home', href: '/', icon: Home, sectionId: 'hero' },
@@ -61,17 +62,26 @@ export const FloatingNav = () => {
       {/* Mobile Toggle Button - Always visible */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="fixed bottom-6 left-6 z-[100] md:hidden p-4 rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30 hover:scale-110 transition-all duration-300"
+        className="group fixed bottom-6 left-6 z-[9999] md:hidden p-4 rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30 hover:scale-110 transition-all duration-300"
+        aria-label={isExpanded ? 'Close navigation menu' : 'Open navigation menu'}
       >
         <div className="relative w-6 h-6">
           <Menu className={`w-6 h-6 absolute transition-all duration-300 ${isExpanded ? 'opacity-0 rotate-90' : 'opacity-100 rotate-0'}`} />
           <X className={`w-6 h-6 absolute transition-all duration-300 ${isExpanded ? 'opacity-100 rotate-0' : 'opacity-0 -rotate-90'}`} />
         </div>
+        
+        {/* Tooltip */}
+        <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 rounded-lg bg-secondary/90 backdrop-blur-md text-foreground text-sm font-body whitespace-nowrap opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 border border-border/50">
+          <span className="block font-semibold mb-0.5">Menu</span>
+          <span className="text-xs opacity-80">
+            {isExpanded ? 'Click to close' : 'Click to open navigation'}
+          </span>
+        </span>
       </button>
 
       {/* Mobile Nav Overlay */}
       <div
-        className={`fixed inset-0 z-[90] bg-background/80 backdrop-blur-md md:hidden transition-opacity duration-300 ${
+        className={`fixed inset-0 z-[9998] bg-background/80 backdrop-blur-md md:hidden transition-opacity duration-300 ${
           isExpanded ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
         }`}
         onClick={() => setIsExpanded(false)}
@@ -92,9 +102,10 @@ export const FloatingNav = () => {
                   opacity: isExpanded ? 1 : 0,
                   transitionDelay: `${index * 0.05}s`
                 }}
+                aria-label={`Navigate to ${item.label} section`}
               >
                 <item.icon className="w-5 h-5" />
-                <span className="font-body text-sm">{item.label}</span>
+                <span className="font-body text-sm font-semibold">{item.label}</span>
               </button>
             ) : (
               <Link
@@ -111,9 +122,10 @@ export const FloatingNav = () => {
                   opacity: isExpanded ? 1 : 0,
                   transitionDelay: `${index * 0.05}s`
                 }}
+                aria-label={`Navigate to ${item.label} page`}
               >
                 <item.icon className="w-5 h-5" />
-                <span className="font-body text-sm">{item.label}</span>
+                <span className="font-body text-sm font-semibold">{item.label}</span>
               </Link>
             )
           ))}
@@ -121,13 +133,18 @@ export const FloatingNav = () => {
       </div>
 
       {/* Desktop Floating Navigation - Always visible */}
-      <nav className="fixed left-6 top-1/2 -translate-y-1/2 z-[100] hidden md:flex flex-col gap-3 bg-background/50 backdrop-blur-md p-3 rounded-2xl border border-border/30">
+      <nav 
+        className="fixed left-6 top-1/2 -translate-y-1/2 z-[99999] hidden md:flex flex-col gap-3 bg-background/95 backdrop-blur-xl p-3 rounded-2xl border-2 border-primary/30 shadow-2xl"
+      >
         {/* Logo */}
         <div className="flex items-center justify-center mb-2">
           <div className="p-2.5 rounded-full bg-primary/10 border border-primary/30 animate-pulse-slow">
             <Sparkles className="w-5 h-5 text-primary" />
           </div>
         </div>
+
+        {/* Theme Toggle */}
+        <ThemeToggle />
 
         {navItems.map((item) => (
           isHomePage ? (
@@ -143,8 +160,11 @@ export const FloatingNav = () => {
               <item.icon className="w-5 h-5" />
               
               {/* Tooltip */}
-              <span className="absolute left-full ml-3 px-3 py-1.5 rounded-lg bg-secondary/90 backdrop-blur-md text-foreground text-sm font-body whitespace-nowrap opacity-0 invisible -translate-x-2 group-hover:opacity-100 group-hover:visible group-hover:translate-x-0 transition-all duration-300 border border-border/50">
-                {item.label}
+              <span className="absolute left-full ml-3 px-3 py-1.5 rounded-lg bg-secondary/90 backdrop-blur-md text-foreground text-sm font-body whitespace-nowrap opacity-0 invisible -translate-x-2 group-hover:opacity-100 group-hover:visible group-hover:translate-x-0 transition-all duration-300 border border-border/50 z-[100000]">
+                <span className="block font-semibold">{item.label}</span>
+                <span className="text-xs opacity-80">
+                  {isHomePage ? 'Click to scroll to section' : 'Click to navigate'}
+                </span>
               </span>
 
               {/* Active indicator */}
@@ -165,8 +185,11 @@ export const FloatingNav = () => {
               <item.icon className="w-5 h-5" />
               
               {/* Tooltip */}
-              <span className="absolute left-full ml-3 px-3 py-1.5 rounded-lg bg-secondary/90 backdrop-blur-md text-foreground text-sm font-body whitespace-nowrap opacity-0 invisible -translate-x-2 group-hover:opacity-100 group-hover:visible group-hover:translate-x-0 transition-all duration-300 border border-border/50">
-                {item.label}
+              <span className="absolute left-full ml-3 px-3 py-1.5 rounded-lg bg-secondary/90 backdrop-blur-md text-foreground text-sm font-body whitespace-nowrap opacity-0 invisible -translate-x-2 group-hover:opacity-100 group-hover:visible group-hover:translate-x-0 transition-all duration-300 border border-border/50 z-[100000]">
+                <span className="block font-semibold">{item.label}</span>
+                <span className="text-xs opacity-80">
+                  {isHomePage ? 'Click to scroll to section' : 'Click to navigate'}
+                </span>
               </span>
 
               {/* Active indicator */}

@@ -1,9 +1,9 @@
 import { useState, useCallback } from 'react';
 import { CountdownTimer } from './CountdownTimer';
 import { Fireworks } from './Fireworks';
-import { Cake, PartyPopper } from 'lucide-react';
+import { Cake, PartyPopper, Heart } from 'lucide-react';
 
-export const Hero = () => {
+export const Hero = ({ onCountdownComplete }: { onCountdownComplete?: () => void }) => {
   const [showFireworks, setShowFireworks] = useState(false);
   
   // Set target date to December 31st of current year at midnight
@@ -19,12 +19,9 @@ export const Hero = () => {
     setShowFireworks(true);
     // Auto-hide fireworks after 15 seconds
     setTimeout(() => setShowFireworks(false), 15000);
-  }, []);
-
-  const triggerFireworks = () => {
-    setShowFireworks(true);
-    setTimeout(() => setShowFireworks(false), 10000);
-  };
+    // Notify parent component
+    onCountdownComplete?.();
+  }, [onCountdownComplete]);
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center px-4 pt-20" id="hero">
@@ -38,6 +35,12 @@ export const Hero = () => {
       {/* Main content */}
       <div className="text-center relative z-10 max-w-5xl mx-auto">
         <div className="flex items-center justify-center gap-4 mb-6 animate-fade-up">
+          <Heart className="w-12 h-12 sm:w-16 sm:h-16 text-accent fill-accent animate-pulse drop-shadow-[0_0_20px_rgba(255,107,138,0.6)]" />
+          <span className="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-foreground">Happy Birthday</span>
+          <Heart className="w-12 h-12 sm:w-16 sm:h-16 text-accent fill-accent animate-pulse drop-shadow-[0_0_20px_rgba(255,107,138,0.6)]" />
+        </div>
+
+        <div className="flex items-center justify-center gap-4 mb-6 animate-fade-up" style={{ animationDelay: '0.1s' }}>
           <Cake className="w-8 h-8 sm:w-10 sm:h-10 text-primary" />
           <span className="text-primary uppercase tracking-[0.4em] text-sm sm:text-base font-body">
             Countdown to Celebration
@@ -45,37 +48,25 @@ export const Hero = () => {
           <PartyPopper className="w-8 h-8 sm:w-10 sm:h-10 text-accent" />
         </div>
 
-        <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-bold text-foreground mb-4 animate-fade-up" style={{ animationDelay: '0.2s' }}>
-          Happy <span className="text-gradient-gold">Birthday!</span>
+        <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-bold text-foreground mb-4 animate-fade-up" style={{ animationDelay: '0.3s' }}>
+          Princess <span className="text-gradient-gold">Noor Jahan</span>
         </h1>
 
-        <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground font-elegant italic mb-12 animate-fade-up" style={{ animationDelay: '0.4s' }}>
+        <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground font-elegant italic mb-12 animate-fade-up" style={{ animationDelay: '0.5s' }}>
           A celebration of love, joy, and beautiful memories
         </p>
 
         {/* Countdown Timer */}
-        <div className="mb-12 animate-fade-up" style={{ animationDelay: '0.6s' }}>
+        <div className="mb-12 animate-fade-up" style={{ animationDelay: '0.7s' }}>
           <CountdownTimer 
             targetDate={targetDate} 
             onComplete={handleCountdownComplete} 
           />
         </div>
 
-        <p className="text-muted-foreground mb-8 font-body animate-fade-up" style={{ animationDelay: '0.8s' }}>
+        <p className="text-muted-foreground mb-8 font-body animate-fade-up" style={{ animationDelay: '0.9s' }}>
           Until December 31st, {targetDate.getFullYear()}
         </p>
-
-        {/* Preview Fireworks Button */}
-        <button
-          onClick={triggerFireworks}
-          className="group relative px-8 py-4 bg-transparent border-2 border-primary text-foreground rounded-full font-body uppercase tracking-wider text-sm hover:bg-primary hover:text-primary-foreground transition-all duration-300 animate-fade-up glow-gold"
-          style={{ animationDelay: '1s' }}
-        >
-          <span className="relative z-10 flex items-center gap-2">
-            <PartyPopper className="w-5 h-5" />
-            Preview Fireworks
-          </span>
-        </button>
       </div>
 
       {/* Scroll indicator */}

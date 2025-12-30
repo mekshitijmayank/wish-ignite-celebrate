@@ -7,39 +7,33 @@ import { PageTransition } from '@/components/PageTransition';
 const galleryImages = [
   {
     id: 1,
-    src: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=600&h=400&fit=crop",
-    alt: "Birthday celebration with confetti",
-    caption: "Moments of Joy",
+    src: "/img 1.jpeg",
+    alt: "Memory 1",
   },
   {
     id: 2,
-    src: "https://images.unsplash.com/photo-1464349153735-7db50ed83c84?w=600&h=400&fit=crop",
-    alt: "Sparklers celebration",
-    caption: "Sparkling Memories",
+    src: "/img 2.jpeg",
+    alt: "Memory 2",
   },
   {
     id: 3,
-    src: "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=600&h=400&fit=crop",
-    alt: "Colorful balloons",
-    caption: "Colors of Happiness",
+    src: "/img 3.jpeg",
+    alt: "Memory 3",
   },
   {
     id: 4,
-    src: "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=600&h=400&fit=crop",
-    alt: "Party decorations",
-    caption: "Festive Vibes",
+    src: "/img 4.jpeg",
+    alt: "Memory 4",
   },
   {
     id: 5,
-    src: "https://images.unsplash.com/photo-1602631985686-1bb0e6a8696e?w=600&h=400&fit=crop",
-    alt: "Birthday cake celebration",
-    caption: "Sweet Celebrations",
+    src: "/img 5.jpeg",
+    alt: "Memory 5",
   },
   {
     id: 6,
-    src: "https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?w=600&h=400&fit=crop",
-    alt: "Party celebration",
-    caption: "Dancing Night",
+    src: "/img 6.jpeg",
+    alt: "Memory 6",
   },
 ];
 
@@ -133,11 +127,10 @@ export const GalleryPage = () => {
                     className="w-full h-full object-cover transform group-hover:scale-110 group-hover:rotate-1 transition-all duration-700"
                   />
                   
-                  {/* Caption */}
+                  {/* Click to view indicator */}
                   <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
                     <div className="transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                      <p className="text-foreground font-display text-xl mb-1">{image.caption}</p>
-                      <div className="flex items-center gap-2 text-primary text-sm font-body">
+                      <div className="flex items-center gap-2 text-primary text-sm font-body justify-center">
                         <Camera className="w-4 h-4" />
                         <span>Click to view</span>
                       </div>
@@ -196,18 +189,14 @@ export const GalleryPage = () => {
                 <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 rounded-3xl blur-2xl animate-pulse-slow" />
                 
                 <img
-                  src={galleryImages[selectedImage].src.replace('w=600&h=400', 'w=1200&h=800')}
+                  src={galleryImages[selectedImage].src}
                   alt={galleryImages[selectedImage].alt}
                   className="relative max-w-full max-h-[80vh] object-contain rounded-2xl border border-border/50"
                 />
               </div>
               
-              <p className="text-center text-foreground font-display text-2xl mt-6 animate-fade-up">
-                {galleryImages[selectedImage].caption}
-              </p>
-              
               {/* Image counter */}
-              <p className="text-center text-muted-foreground font-body text-sm mt-2">
+              <p className="text-center text-muted-foreground font-body text-sm mt-6">
                 {selectedImage + 1} / {galleryImages.length}
               </p>
             </div>

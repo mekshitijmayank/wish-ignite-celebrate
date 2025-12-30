@@ -66,31 +66,113 @@ export const Poem = () => {
               </div>
               
               {/* Poem lines with staggered animations */}
-              <div className="text-center space-y-10 font-elegant text-xl sm:text-2xl md:text-3xl leading-relaxed text-foreground/90 italic">
+              <div className="text-center space-y-6 sm:space-y-8 font-elegant text-lg sm:text-xl md:text-2xl leading-relaxed text-foreground/90">
                 <p className="animate-fade-up opacity-0" style={{ animationDelay: '0.5s', animationFillMode: 'forwards' }}>
-                  On this day a star was born,
-                  <br />
-                  <span className="text-primary/80">A light that makes each moment warm.</span>
+                  <span className="text-primary/90 font-semibold">Tum jaisi v ho, mujhe koi badlaav nhi chahiye tum'me</span>
                 </p>
                 
-                <p className="animate-fade-up opacity-0" style={{ animationDelay: '0.8s', animationFillMode: 'forwards' }}>
-                  With every year that passes by,
-                  <br />
-                  <span className="text-accent/80">Your spirit soars, your dreams fly high.</span>
+                <p className="animate-fade-up opacity-0" style={{ animationDelay: '0.7s', animationFillMode: 'forwards' }}>
+                  <span className="text-foreground/90">Tum khubsurat ho...</span>
+                </p>
+                
+                <p className="animate-fade-up opacity-0 italic" style={{ animationDelay: '0.9s', animationFillMode: 'forwards' }}>
+                  "Tum khubsurat lag rhi ho"
                 </p>
                 
                 <p className="animate-fade-up opacity-0" style={{ animationDelay: '1.1s', animationFillMode: 'forwards' }}>
-                  May laughter echo through your days,
-                  <br />
-                  <span className="text-gold-light/80">May joy find you in countless ways.</span>
+                  Aur <span className="text-accent/90">"tum khubsurat ho"</span> nime bhut hi mehin dhage sa fark hai,
                 </p>
                 
-                <p className="animate-fade-up opacity-0" style={{ animationDelay: '1.4s', animationFillMode: 'forwards' }}>
-                  So raise a toast to all you are,
+                <p className="animate-fade-up opacity-0" style={{ animationDelay: '1.3s', animationFillMode: 'forwards' }}>
+                  Maano dono jaise alg alg waqt pe khe gye alfaaz hai..
+                </p>
+                
+                <p className="animate-fade-up opacity-0" style={{ animationDelay: '1.5s', animationFillMode: 'forwards' }}>
+                  Alg alg paimaane hai dono ke kahe jaane ke...
+                </p>
+                
+                <p className="animate-fade-up opacity-0" style={{ animationDelay: '1.7s', animationFillMode: 'forwards' }}>
+                  Mai utni ganit nhi jaanta,
                   <br />
+                  Mai hamesha khaunga ki
+                </p>
+                
+                <p className="animate-fade-up opacity-0 italic text-primary/90" style={{ animationDelay: '1.9s', animationFillMode: 'forwards' }}>
+                  " Tum khubsurat ho"
+                </p>
+                
+                <p className="animate-fade-up opacity-0" style={{ animationDelay: '2.1s', animationFillMode: 'forwards' }}>
+                  Tumhe kha jarurat hai,
+                  <br />
+                  In sajja sajawat ke samaan ki,
+                </p>
+                
+                <p className="animate-fade-up opacity-0" style={{ animationDelay: '2.3s', animationFillMode: 'forwards' }}>
+                  Tumhe bas muskaan ki jarurat hai..
+                </p>
+                
+                <p className="animate-fade-up opacity-0" style={{ animationDelay: '2.5s', animationFillMode: 'forwards' }}>
+                  Kavi halki si,
+                  <br />
+                  Kavi khilkhilaahat wali
+                </p>
+                
+                <p className="animate-fade-up opacity-0" style={{ animationDelay: '2.7s', animationFillMode: 'forwards' }}>
+                  Toh kavi achanak se koi baat yaad aaa jaane pe aane wali muskaan..
+                </p>
+                
+                <p className="animate-fade-up opacity-0" style={{ animationDelay: '2.9s', animationFillMode: 'forwards' }}>
+                  Ye itne dher saare sawal jaise
+                  <br />
+                  Kon kaisa lg rha hai,
+                </p>
+                
+                <p className="animate-fade-up opacity-0" style={{ animationDelay: '3.1s', animationFillMode: 'forwards' }}>
+                  Kon kaisa dikhta hoga,
+                  <br />
+                  Aur najaane kya kya
+                </p>
+                
+                <p className="animate-fade-up opacity-0" style={{ animationDelay: '3.3s', animationFillMode: 'forwards' }}>
+                  Is duniya ke us warg ke banaye hue hai jinhe prem hua hi nhi..
+                </p>
+                
+                <p className="animate-fade-up opacity-0" style={{ animationDelay: '3.5s', animationFillMode: 'forwards' }}>
+                  Prem hota toh har chig khubsurat lgti
+                </p>
+                
+                <p className="animate-fade-up opacity-0" style={{ animationDelay: '3.7s', animationFillMode: 'forwards' }}>
+                  Ek samay, ek chan nhi har ghari har waqt
+                </p>
+                
+                <p className="animate-fade-up opacity-0" style={{ animationDelay: '3.9s', animationFillMode: 'forwards' }}>
+                  Fir nhi hote ye ajeeb se sawal..
+                </p>
+                
+                <p className="animate-fade-up opacity-0" style={{ animationDelay: '4.1s', animationFillMode: 'forwards' }}>
+                  Fir har koi har kisi se bas
+                  <br />
+                  Yhi kehtaki
+                </p>
+                
+                <p className="animate-fade-up opacity-0 text-primary/90 font-semibold" style={{ animationDelay: '4.3s', animationFillMode: 'forwards' }}>
+                  "Tum khubsurat ho"
+                </p>
+                
+                <p className="animate-fade-up opacity-0 mt-8" style={{ animationDelay: '4.5s', animationFillMode: 'forwards' }}>
                   <span className="text-gradient-gold not-italic font-display text-2xl sm:text-3xl md:text-4xl">
-                    Our brightest, most beloved star.
+                    Janamdin Mubarak
                   </span>
+                </p>
+                
+                <p className="animate-fade-up opacity-0" style={{ animationDelay: '4.7s', animationFillMode: 'forwards' }}>
+                  <span className="text-rose/90 italic text-xl sm:text-2xl">
+                    "princess noor jahan ahmad "
+                  </span>
+                </p>
+                
+                <p className="animate-fade-up opacity-0 text-rose mt-4" style={{ animationDelay: '4.9s', animationFillMode: 'forwards' }}>
+                  ❤️
                 </p>
               </div>
 

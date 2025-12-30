@@ -47,8 +47,11 @@ export const Fireworks = ({ show }: { show: boolean }) => {
     if (!ctx) return;
 
     const resizeCanvas = () => {
+      // Use full viewport dimensions
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+      canvas.style.width = '100vw';
+      canvas.style.height = '100vh';
     };
 
     resizeCanvas();
@@ -198,8 +201,15 @@ export const Fireworks = ({ show }: { show: boolean }) => {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 z-50 pointer-events-none"
-      style={{ background: 'transparent' }}
+      className="fixed inset-0 z-[99999] pointer-events-none"
+      style={{ 
+        background: 'transparent',
+        width: '100vw',
+        height: '100vh',
+        top: 0,
+        left: 0,
+        position: 'fixed'
+      }}
     />
   );
 };
