@@ -21,12 +21,26 @@ export const Hero = ({ onCountdownComplete }: { onCountdownComplete?: () => void
   useEffect(() => {
     if (audioRef.current) {
       if (timerActive) {
-        audioRef.current.play().catch(err => console.log('Audio play failed:', err));
+        // Try to play, but handle browser autoplay restrictions
+        const playPromise = audioRef.current.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(err => {
+            // Autoplay was prevented, will play on first user interaction
+            console.log('Autoplay prevented, audio will play on user interaction');
+          });
+        }
       } else {
         audioRef.current.pause();
       }
     }
   }, [timerActive]);
+  
+  // Play audio on first user interaction
+  const handleUserInteraction = () => {
+    if (audioRef.current && timerActive) {
+      audioRef.current.play().catch(err => console.log('Audio play failed:', err));
+    }
+  };
 
   const handleCountdownComplete = useCallback(() => {
     setShowFireworks(true);
@@ -38,7 +52,7 @@ export const Hero = ({ onCountdownComplete }: { onCountdownComplete?: () => void
   }, [onCountdownComplete]);
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center px-4 pt-20" id="hero">
+    <section className="relative min-h-screen flex flex-col items-center justify-center px-4 pt-20" id="hero" onClick={handleUserInteraction}>
       <Fireworks show={showFireworks} />
       
       {/* Birthday Music - plays on repeat while timer is active */}
