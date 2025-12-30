@@ -4,7 +4,8 @@ import { Hero } from '@/components/Hero';
 import { Footer } from '@/components/Footer';
 import { ParticleBackground } from '@/components/ParticleBackground';
 import { PageTransition } from '@/components/PageTransition';
-import { Feather, Camera, ArrowRight, Sparkles, Heart, Star, Gift, MessageCircle, Brain } from 'lucide-react';
+import { Fireworks } from '@/components/Fireworks';
+import { Feather, Camera, ArrowRight, Sparkles, Heart, Star, Gift, MessageCircle, Brain, Zap } from 'lucide-react';
 
 const MAX_PREVIEW_LENGTH = 150;
 
@@ -44,6 +45,8 @@ Not just a friend—my safe place within. 💛👑`,
 const Index = () => {
   const [expandedNotes, setExpandedNotes] = useState<Set<number>>(new Set());
   const [timerComplete, setTimerComplete] = useState(false);
+  const [showFireworks, setShowFireworks] = useState(false);
+  const [hasInitialFireworksPlayed, setHasInitialFireworksPlayed] = useState(false);
   
   // Memory Game State
   const [memoryCards, setMemoryCards] = useState<boolean[]>([]);
@@ -114,6 +117,21 @@ const Index = () => {
 
   const handleTimerComplete = () => {
     setTimerComplete(true);
+    setShowFireworks(true);
+    
+    // Auto-hide fireworks after 15 seconds
+    setTimeout(() => {
+      setShowFireworks(false);
+    }, 15000);
+  };
+  
+  const handleReplayFireworks = () => {
+    setShowFireworks(true);
+    
+    // Auto-hide fireworks after 15 seconds
+    setTimeout(() => {
+      setShowFireworks(false);
+    }, 15000);
   };
 
   return (
@@ -121,6 +139,9 @@ const Index = () => {
       <main className="relative min-h-screen bg-background overflow-x-hidden">
       {/* Floating particles background */}
       <ParticleBackground />
+      
+      {/* Fireworks that can be triggered manually */}
+      <Fireworks show={showFireworks} />
       
       {/* Hero with Countdown */}
       <Hero onCountdownComplete={handleTimerComplete} />
@@ -216,6 +237,17 @@ const Index = () => {
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-display font-bold text-foreground mb-4 animate-fade-up" style={{ animationDelay: '0.1s' }}>
               Birthday <span className="text-gradient-gold">Notes</span>
             </h2>
+            
+            {/* Light Fireworks Again Button */}
+            <button
+              onClick={handleReplayFireworks}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-accent/20 border border-accent/50 text-accent hover:bg-accent/30 transition-all duration-300 group mt-4 animate-fade-up"
+              style={{ animationDelay: '0.2s' }}
+              title="Replay the celebration fireworks!"
+            >
+              <Zap className="w-4 h-4 group-hover:scale-110 transition-transform" />
+              <span className="font-body text-sm uppercase tracking-wider">Light Fireworks Again</span>
+            </button>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-10">

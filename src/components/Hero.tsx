@@ -10,14 +10,8 @@ export const Hero = ({ onCountdownComplete }: { onCountdownComplete?: () => void
   const audioRef = useRef<HTMLAudioElement>(null);
   const celebrationAudioRef = useRef<HTMLAudioElement>(null);
   
-  // Set target date to December 31st of current year at midnight
-  const currentYear = new Date().getFullYear();
-  const targetDate = new Date(currentYear, 11, 31, 0, 0, 0); // Month is 0-indexed
-  
-  // If Dec 31 has passed, set to next year
-  if (targetDate < new Date()) {
-    targetDate.setFullYear(currentYear + 1);
-  }
+  // Set target date to a time in the past to immediately complete the countdown
+  const targetDate = new Date(Date.now() - 1000); // 1 second ago
   
   // Handle audio playback with browser autoplay compatibility
   useEffect(() => {
