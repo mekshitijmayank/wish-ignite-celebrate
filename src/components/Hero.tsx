@@ -1,11 +1,12 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { CountdownTimer } from './CountdownTimer';
 import { Fireworks } from './Fireworks';
-import { Cake, PartyPopper, Heart } from 'lucide-react';
+import { Cake, PartyPopper, Heart, Volume2, VolumeX } from 'lucide-react';
 
 export const Hero = ({ onCountdownComplete }: { onCountdownComplete?: () => void }) => {
   const [showFireworks, setShowFireworks] = useState(false);
   const [timerActive, setTimerActive] = useState(true);
+  const [isMusicPlaying, setIsMusicPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
   
   // Set target date to December 31st of current year at midnight
@@ -41,6 +42,19 @@ export const Hero = ({ onCountdownComplete }: { onCountdownComplete?: () => void
       audioRef.current.play().catch(err => console.log('Audio play failed:', err));
     }
   };
+  
+  const toggleMusic = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (audioRef.current) {
+      if (isMusicPlaying) {
+        audioRef.current.pause();
+        setIsMusicPlaying(false);
+      } else {
+        audioRef.current.play().catch(err => console.log('Audio play failed:', err));
+        setIsMusicPlaying(true);
+      }
+    }
+  };
 
   const handleCountdownComplete = useCallback(() => {
     setShowFireworks(true);
@@ -62,6 +76,22 @@ export const Hero = ({ onCountdownComplete }: { onCountdownComplete?: () => void
         loop
         className="hidden"
       />
+      
+      {/* Music Control Button */}
+      {timerActive && (
+        <button
+          onClick={toggleMusic}
+          className="fixed top-6 right-6 z-40 flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/50 backdrop-blur-md border border-primary/30 text-foreground hover:bg-primary/20 hover:border-primary/50 transition-all duration-300 group"
+          title={isMusicPlaying ? "Mute music" : "Play music"}
+        >
+          {isMusicPlaying ? (
+            <Volume2 className="w-5 h-5 group-hover:scale-110 transition-transform" />
+          ) : (
+            <VolumeX className="w-5 h-5 group-hover:scale-110 transition-transform" />
+          )}
+          <span className="font-body text-sm">{isMusicPlaying ? "Music On" : "Music Off"}</span>
+        </button>
+      )}
       
       {/* Decorative elements */}
       <div className="absolute top-1/4 left-10 w-20 h-20 border border-primary/20 rounded-full animate-float" style={{ animationDelay: '0s' }} />
