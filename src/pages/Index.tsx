@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Hero } from '@/components/Hero';
 import { Footer } from '@/components/Footer';
 import { ParticleBackground } from '@/components/ParticleBackground';
 import { PageTransition } from '@/components/PageTransition';
-import { Feather, Camera, ArrowRight, Sparkles, Heart, Star, Gift, MessageCircle } from 'lucide-react';
+import { Feather, Camera, ArrowRight, Sparkles, Heart, Star, Gift, MessageCircle, Brain } from 'lucide-react';
 
 const MAX_PREVIEW_LENGTH = 150;
 
@@ -44,6 +44,44 @@ Not just a friend—my safe place within. 💛👑`,
 const Index = () => {
   const [expandedNotes, setExpandedNotes] = useState<Set<number>>(new Set());
   const [timerComplete, setTimerComplete] = useState(false);
+  
+  // Memory Game State
+  const [memoryCards, setMemoryCards] = useState<boolean[]>([]);
+  const [memoryFlipped, setMemoryFlipped] = useState<Set<number>>(new Set());
+  const [memoryMatched, setMemoryMatched] = useState<Set<number>>(new Set());
+  const [memoryScore, setMemoryScore] = useState(0);
+  
+  const gameEmojis = ['🎂', '🎉', '🎁', '🎈', '🎊', '💝', '🌟', '✨'];
+  
+  useEffect(() => {
+    if (!timerComplete && memoryCards.length === 0) {
+      // Initialize memory game
+      const shuffled = [...gameEmojis, ...gameEmojis].sort(() => Math.random() - 0.5);
+      setMemoryCards(shuffled);
+    }
+  }, [timerComplete, memoryCards.length]);
+  
+  const handleMemoryCardClick = (index: number) => {
+    if (memoryFlipped.has(index) || memoryMatched.has(index) || memoryFlipped.size === 2) return;
+    
+    const newFlipped = new Set(memoryFlipped);
+    newFlipped.add(index);
+    setMemoryFlipped(newFlipped);
+    
+    if (newFlipped.size === 2) {
+      const [first, second] = Array.from(newFlipped);
+      if (memoryCards[first] === memoryCards[second]) {
+        const newMatched = new Set(memoryMatched);
+        newMatched.add(first);
+        newMatched.add(second);
+        setMemoryMatched(newMatched);
+        setMemoryScore(prev => prev + 1);
+        setMemoryFlipped(new Set());
+      } else {
+        setTimeout(() => setMemoryFlipped(new Set()), 600);
+      }
+    }
+  };
 
   const truncateText = (text: string, maxLength: number) => {
     if (text.length <= maxLength) return text;
@@ -78,6 +116,72 @@ const Index = () => {
       
       {/* Hero with Countdown */}
       <Hero onCountdownComplete={handleTimerComplete} />
+      
+      {/* Fun Games Section - Only visible WHILE timer is running */}
+      {!timerComplete && (
+      <section className="py-20 px-4 relative overflow-hidden bg-gradient-to-b from-background via-primary/5 to-background" id="games">
+        <div className="absolute top-10 right-10 w-64 h-64 bg-accent/10 rounded-full blur-3xl animate-pulse-slow" />
+        <div className="absolute bottom-10 left-10 w-80 h-80 bg-primary/10 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '1.5s' }} />
+        
+        <div className="max-w-6xl mx-auto relative">
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-foreground mb-4 animate-fade-up">
+              Play While We <span className="text-gradient-gold">Wait! 🎮</span>
+            </h2>
+            <p className="text-muted-foreground text-sm sm:text-base md:text-lg animate-fade-up" style={{ animationDelay: '0.1s' }}>
+              These games will disappear once the countdown ends!
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 gap-8 mb-10">
+            {/* Memory Game */}
+            <div className="group relative animate-fade-up" style={{ animationDelay: '0.2s' }}>
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative card-glass rounded-2xl p-4 sm:p-6 md:p-8 border border-border/50 hover:border-primary/30 transition-all duration-500 h-full flex flex-col">
+                <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+                  <Brain className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
+                  <h3 className="text-xl sm:text-2xl font-bold text-foreground">Memory Match</h3>
+                </div>
+                
+                <p className="text-muted-foreground text-sm sm:text-base mb-4 sm:mb-6">Match all the emoji pairs! Test your memory! 🧠</p>
+                
+                <div className="flex-grow flex flex-col items-center justify-center gap-4 sm:gap-6 mb-4 sm:mb-6">
+                  <div className="text-center">
+                    <div className="text-3xl sm:text-4xl font-bold text-gradient-gold mb-1">{memoryScore}/{gameEmojis.length}</div>
+                    <p className="text-muted-foreground text-xs sm:text-sm">Pairs Matched</p>
+                  </div>
+                  
+                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-1.5 sm:gap-2 w-full max-w-sm">
+                    {memoryCards.map((emoji, index) => (
+                      <button
+                        key={index}
+                        onClick={() => handleMemoryCardClick(index)}
+                        disabled={memoryMatched.has(index)}
+                        className={`aspect-square rounded-lg font-bold text-base sm:text-2xl transition-all duration-200 transform ${
+                          memoryMatched.has(index)
+                            ? 'opacity-30 cursor-default'
+                            : 'bg-primary/20 hover:bg-primary/40 active:scale-95 cursor-pointer'
+                        } ${
+                          memoryFlipped.has(index) ? 'bg-primary/50' : 'border border-primary/30'
+                        }`}
+                      >
+                        {memoryFlipped.has(index) || memoryMatched.has(index) ? emoji : '?'}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                
+                {memoryScore === gameEmojis.length && (
+                  <div className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-green-500/20 border border-green-500/50 text-green-400 rounded-lg text-center text-sm sm:text-base font-bold">
+                    🎉 You Won! Check back after the countdown!
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      )}
       
       {/* Notes Preview Section - Only visible after timer completes */}
       {timerComplete && (
