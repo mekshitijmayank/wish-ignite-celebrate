@@ -117,15 +117,10 @@ const Index = () => {
 
   const handleTimerComplete = () => {
     setTimerComplete(true);
-    setShowFireworks(true);
-    
-    // Auto-hide fireworks after 15 seconds
-    setTimeout(() => {
-      setShowFireworks(false);
-    }, 15000);
+    // Fireworks will only show when user clicks the button
   };
   
-  const handleReplayFireworks = () => {
+  const handleLightFireworks = () => {
     setShowFireworks(true);
     
     // Play celebration music
@@ -254,15 +249,15 @@ const Index = () => {
               Birthday <span className="text-gradient-gold">Notes</span>
             </h2>
             
-            {/* Light Fireworks Again Button */}
+            {/* Light Fireworks Button */}
             <button
-              onClick={handleReplayFireworks}
+              onClick={handleLightFireworks}
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-accent/20 border border-accent/50 text-accent hover:bg-accent/30 transition-all duration-300 group mt-4 animate-fade-up"
               style={{ animationDelay: '0.2s' }}
-              title="Replay the celebration fireworks!"
+              title="Light up the celebration with fireworks!"
             >
               <Zap className="w-4 h-4 group-hover:scale-110 transition-transform" />
-              <span className="font-body text-sm uppercase tracking-wider">Light Fireworks Again</span>
+              <span className="font-body text-sm uppercase tracking-wider">Light Fireworks</span>
             </button>
           </div>
 
