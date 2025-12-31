@@ -137,7 +137,7 @@ export const Hero = ({ onCountdownComplete }: { onCountdownComplete?: () => void
         <div className="flex items-center justify-center gap-4 mb-6 animate-fade-up" style={{ animationDelay: '0.1s' }}>
           <Cake className="w-8 h-8 sm:w-10 sm:h-10 text-primary" />
           <span className="text-primary uppercase tracking-[0.4em] text-sm sm:text-base font-body">
-            Countdown to Celebration
+            It's 31st December & It's Your Birthday
           </span>
           <PartyPopper className="w-8 h-8 sm:w-10 sm:h-10 text-accent" />
         </div>
@@ -159,7 +159,7 @@ export const Hero = ({ onCountdownComplete }: { onCountdownComplete?: () => void
         </div>
 
         <p className="text-muted-foreground mb-8 font-body animate-fade-up" style={{ animationDelay: '0.9s' }}>
-          Until December 31st, {targetDate.getFullYear()}
+          🎉 It's December 31st & It's Your Birthday! 🎉
         </p>
       </div>
 
